@@ -15,7 +15,7 @@ def update_balances(sender, instance, **kwargs):
     # Handle transaction operations
     if instance.transaction_type == 'TRANSFER':
         update_account(instance.account, instance.amount, 'OUT')
-        update_account(instance.related_account, instance.amount, 'IN')
+        update_account(instance.related_account, instance.amount, 'IN') ####
     elif instance.transaction_type == 'CREDIT_PAYMENT':
         update_account(instance.account, instance.amount, 'IN')
         if instance.related_account:  # Link to debit account payment
@@ -24,13 +24,13 @@ def update_balances(sender, instance, **kwargs):
         update_account(instance.account, instance.amount, instance.transaction_type)
 
     # Update consolidated balance
-    user_accounts = Account.objects.filter(user=instance.user)
+    user_accounts = Account
     ConsolidatedBalance.objects.update_or_create(
         user=instance.user,
         defaults={
-            'total_balance': user_accounts.aggregate(total=Sum('current_balance'))['total'] or 0,
-            'debit_balance': user_accounts.debit.aggregate(total=Sum('current_balance'))['total'] or 0,
-            'credit_balance': user_accounts.credit.aggregate(total=Sum('current_balance'))['total'] or 0,
-            'savings_balance': user_accounts.savings.aggregate(total=Sum('current_balance'))['total'] or 0,
+            'total_balance': user_accounts.objects.filter(user=instance.user).aggregate(total=Sum('current_balance'))['total'] or 0,
+            'debit_balance': user_accounts.debit.filter(user=instance.user).aggregate(total=Sum('current_balance'))['total'] or 0,
+            'credit_balance': user_accounts.credit.filter(user=instance.user).aggregate(total=Sum('current_balance'))['total'] or 0,
+            'savings_balance': user_accounts.savings.filter(user=instance.user).aggregate(total=Sum('current_balance'))['total'] or 0,
         }
     )
