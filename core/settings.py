@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -152,3 +153,4 @@ CHANNEL_LAYERS = {
         }
     }
 }
+sys.path.append(os.path.join(BASE_DIR, 'core/apps'))
