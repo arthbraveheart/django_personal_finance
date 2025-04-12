@@ -30,3 +30,4 @@ sqlalchemy
 mindsdb_sdk
 dash[diskcache]
 channels-redis
+openpyxl

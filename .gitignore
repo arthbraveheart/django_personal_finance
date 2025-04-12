@@ -186,3 +186,4 @@ media/
 staticfiles/
 .ipynb_checkpoints/
 *.log
+notebooks/

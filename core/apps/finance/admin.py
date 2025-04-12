@@ -56,7 +56,7 @@ class TransactionInline(admin.TabularInline):
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ('date', 'user', 'account', 'transaction_type', 'amount', 'category')
-    list_filter = ('transaction_type', 'category', 'date')
+    list_filter = ('account','transaction_type', 'category', 'date')
     search_fields = ('description', 'account__name')
     raw_id_fields = ('account', 'related_account')
     date_hierarchy = 'date'
